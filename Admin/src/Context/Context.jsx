@@ -27,7 +27,15 @@ const Context = ({ children }) => {
     };
 
     fetchJobs();
-  }, ); // Runs when token is set
+  },); // Runs when token is set
+
+  useEffect(() => {
+    const t = localStorage.getItem('token');
+    if (t) {
+      setToken(t);
+      setLogin(true); // ✅ update login state
+    }
+  }, []);
 
   return (
     <AdminContext.Provider value={{ login, setLogin, token, setToken, job, setJob }}>

@@ -4,6 +4,10 @@ import { useAppContext } from '../Context/Context';
 
 const Navbar = () => {
   const { setLogin } = useAppContext();
+  const handleLogout=()=>{
+    setLogin(false)
+    localStorage.removeItem('token')
+  }
 
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
@@ -64,7 +68,8 @@ const Navbar = () => {
           </NavLink>
 
           <button
-            onClick={() => setLogin(false)}
+            style={{padding:"10px"}}
+            onClick={handleLogout}
             className="ml-2 bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-full text-sm transition"
           >
             Logout

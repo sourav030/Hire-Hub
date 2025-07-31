@@ -18,6 +18,8 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
+
+
   const fetchUserApplications = async () => {
     if (!token) return;
 
@@ -27,7 +29,7 @@ export const ContextProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUserApplications(res.data.applications); 
+      setUserApplications(res.data.applications);
       console.log(res)// ✅ store in context
     } catch (err) {
       console.error("Error fetching user applications:", err.response?.data || err.message);
@@ -37,6 +39,15 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     fetchAllJobs();
   }, []);
+
+  useEffect(() => {
+    const t = localStorage.getItem('token');
+    if (t) {
+      setToken(t);
+      setLogin(true); // ✅ update login state
+    }
+  }, []); // ✅ run only once on mount
+
 
   return (
     <AppContext.Provider

@@ -45,6 +45,7 @@ const Login = () => {
 
       console.log('Response:', res.data);
       setToken(res.data.token)
+      localStorage.setItem('token',res.data.token)
       setSignup(!signup)
       alert(`${signup ? 'Signup' : 'Login'} successful!`);
       setFormData({ name: '', email: '', password: '' });
