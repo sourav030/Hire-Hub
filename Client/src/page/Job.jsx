@@ -4,7 +4,8 @@ import Jobs from './../component/Jobs';
 import { useAppContext } from '../Context/Context';
 
 const Job = () => {
-  const { allJobs } = useAppContext();
+  const { allJobs,fetchAllJobs } = useAppContext();
+  fetchAllJobs()
   console.log(allJobs)
   return (
     <>

@@ -9,6 +9,7 @@ export const ContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userApplications, setUserApplications] = useState([]); // ✅
 
+  
   const fetchAllJobs = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/job/getalljob");
