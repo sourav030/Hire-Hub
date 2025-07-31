@@ -1,0 +1,59 @@
+import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+
+export const AppContext = createContext();
+
+export const ContextProvider = ({ children }) => {
+  const [login, setLogin] = useState(false);
+  const [allJobs, setAllJobs] = useState([]);
+  const [token, setToken] = useState(null);
+  const [userApplications, setUserApplications] = useState([]); // ✅
+
+  const fetchAllJobs = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/job/getalljob");
+      setAllJobs(res.data.jobs || []);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
+
+  const fetchUserApplications = async () => {
+    if (!token) return;
+
+    try {
+      const res = await axios.get("http://localhost:5000/api/job/userApplication", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserApplications(res.data.applications); 
+      console.log(res)// ✅ store in context
+    } catch (err) {
+      console.error("Error fetching user applications:", err.response?.data || err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllJobs();
+  }, []);
+
+  return (
+    <AppContext.Provider
+      value={{
+        token,
+        setToken,
+        login,
+        setLogin,
+        allJobs,
+        fetchAllJobs,
+        userApplications, // ✅ exposed to components
+        fetchUserApplications, // ✅ exposed to components
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useAppContext = () => useContext(AppContext);

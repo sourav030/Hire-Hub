@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* 1. Remove default padding and margin */
+* {
+  margin: 2px;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+/* 2. Set a default font and smooth font rendering */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9; /* Optional default background */
+  color: #333; /* Default text color */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3. Set default anchor styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 4. Make images responsive */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* 5. Set default list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 6. Optional: Default input & button styling */
+input,  textarea, select {
+  font-family: inherit;
+  outline: none;
+  border: none;
+  background: none;
+}
+.Toastify__toast-container {
+  z-index: 9999;
+}
+
+.active {
+  font-weight: bold;
+  color: blue;
+}
