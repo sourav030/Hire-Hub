@@ -3,73 +3,64 @@ import axios from 'axios';
 import { useAppContext } from './../Context/Context';
 
 const Jobs = ({ id, title, description, location, company_name, salary }) => {
-    const { token } = useAppContext();
-    const [message, setMessage] = useState(null); // ✅ message state
-    const [isError, setIsError] = useState(false); // ✅ to set color
+  const { token } = useAppContext();
+  const [message, setMessage] = useState(null);
+  const [isError, setIsError] = useState(false);
 
-    const apply = async () => {
-        console.log("== APPLY CALLED ==");
-        console.log("Token:", token);
-        console.log("Job ID:", id);
+  const apply = async () => {
+    if (!token) {
+      setMessage("Please login to apply.");
+      setIsError(true);
+      return;
+    }
 
-        if (!token) {
-            setMessage("Please login to apply.");
-            setIsError(true);
-            return;
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/api/job/apply',
+        { job_id: id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
+      );
+      setMessage(res.data.message);
+      setIsError(false);
+    } catch (err) {
+      setMessage("You have already applied.");
+      setIsError(true);
+    }
+  };
 
-        try {
-            const res = await axios.post(
-                'http://localhost:5000/api/job/apply',
-                { job_id: id },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+  return (
+    <div className="bg-white p-4 rounded-md flex flex-col gap-3">
+      <div className="flex justify-between items-center">
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        <span className="text-sm text-gray-600">{company_name}</span>
+      </div>
 
-            console.log("Apply success", res.data);
-            setMessage("Successfully applied to the job!");
-            setIsError(false);
-        } catch (err) {
-            console.error("Apply error:", err.response?.data || err.message);
-            setMessage("you already apply ");
-            setIsError(true);
-        }
-    };
+      <p className="text-gray-700 text-sm">{description}</p>
 
-    return (
-        <div className='shadow-2xl flex flex-col w-[500px] p-6 rounded-lg border bg-white gap-4'>
-            <div className='flex justify-between'>
-                <div className='text-xl font-semibold text-gray-800'>{title}</div>
-                <div className='text-gray-600'>{company_name}</div>
-            </div>
+      <div className="text-sm text-gray-600 flex flex-col gap-1">
+        <span><strong>Salary:</strong> ₹{salary}</span>
+        <span><strong>Location:</strong> {location}</span>
+      </div>
 
-            <div className='text-gray-700'>
-                {description}
-            </div>
+      <button
+        onClick={apply}
+        className="mt-2 bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded text-sm w-fit"
+      >
+        Apply
+      </button>
 
-            <div className='flex gap-6 text-gray-600'>
-                <div><span className='font-medium'>Salary:</span> ₹{salary}</div>
-                <div><span className='font-medium'>Location:</span> {location}</div>
-            </div>
-
-            <button
-                onClick={apply}
-                className='mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700'>
-                Apply
-            </button>
-
-            {/* ✅ Show message below */}
-            {message && (
-                <div className={`mt-4 text-sm ${isError ? 'text-red-600' : 'text-green-600'}`}>
-                    {message}
-                </div>
-            )}
+      {message && (
+        <div className={`text-sm mt-2 ${isError ? 'text-red-600' : 'text-green-600'}`}>
+          {message}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default Jobs;

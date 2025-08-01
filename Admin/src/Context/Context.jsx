@@ -9,6 +9,7 @@ const Context = ({ children }) => {
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(null);
   const [job, setJob] = useState([]);
+  const [application, setApplication] = useState([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -30,6 +31,29 @@ const Context = ({ children }) => {
   },); // Runs when token is set
 
   useEffect(() => {
+    if (!token) return;
+
+    const fetchApplication = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/job/viewApplications', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        setApplication(res.data.applications); // ✅ extract the array
+
+        console.log('ye application hai');
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchApplication();
+  }, [token]);
+
+
+  useEffect(() => {
     const t = localStorage.getItem('token');
     if (t) {
       setToken(t);
@@ -38,7 +62,7 @@ const Context = ({ children }) => {
   }, []);
 
   return (
-    <AdminContext.Provider value={{ login, setLogin, token, setToken, job, setJob }}>
+    <AdminContext.Provider value={{ login, setLogin, token, setToken, job, setJob,application,setApplication }}>
       {children}
     </AdminContext.Provider>
   );

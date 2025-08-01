@@ -1,11 +1,7 @@
 @import "tailwindcss";
 
 /* 1. Remove default padding and margin */
-* {
-  margin: 2px;
-  padding: 2px;
-  box-sizing: border-box;
-}
+
 
 /* 2. Set a default font and smooth font rendering */
 body {

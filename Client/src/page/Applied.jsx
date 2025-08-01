@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppContext } from './../Context/Context';
 import Navbar from './../component/Navbar';
-import { Briefcase, MapPin, Building2, IndianRupee, CalendarCheck2 } from 'lucide-react';
+import { CalendarCheck2 } from 'lucide-react';
 
 const Applied = () => {
   const { userApplications, fetchUserApplications } = useAppContext();
@@ -25,9 +25,11 @@ const Applied = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div style={{padding:'50px'}} className="pt-28 max-w-6xl mx-auto px-4 pb-16">
+
+      {/* Centered Container */}
+      <div className="flex flex-col justify-center pt-28 max-w-6xl mx-auto px-4 sm:px-8 w-full pb-16">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-          Jobs in which you applied
+          Jobs You Applied For
         </h2>
 
         {userApplications.length === 0 ? (
@@ -35,43 +37,35 @@ const Applied = () => {
             You haven’t applied to any jobs yet.
           </p>
         ) : (
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="bg-white rounded-xl shadow overflow-x-auto w-full">
+            {/* Table Header */}
+            <div className="grid grid-cols-6 gap-4 bg-gray-200 px-4 py-3 font-semibold text-gray-700 text-sm">
+              <div>Job Title</div>
+              <div>Company</div>
+              <div>Location</div>
+              <div>Salary</div>
+              <div>Status</div>
+              <div>Applied On</div>
+            </div>
+
+            {/* Table Rows */}
             {userApplications.map((job) => (
               <div
                 key={job.application_id}
-                className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                className="grid grid-cols-6 gap-4 px-4 py-5 border-b hover:bg-gray-50 text-sm items-center"
               >
-                <div className="mb-4">
-                  <h3 className="text-xl font-semibold flex items-center gap-2 text-gray-800 mb-1">
-                    <Briefcase className="text-blue-600" size={20} /> {job.title}
-                  </h3>
-
-                  <p className="text-sm flex items-center gap-1 text-gray-600 mb-1">
-                    <Building2 size={16} className="text-purple-500" /> {job.company_name}
-                  </p>
-
-                  <p className="text-sm flex items-center gap-1 text-gray-600 mb-1">
-                    <MapPin size={16} className="text-green-500" /> {job.location}
-                  </p>
-
-                  <p className="text-sm flex items-center gap-1 text-gray-600">
-                    <IndianRupee size={16} className="text-yellow-600" /> {job.salary}
-                  </p>
-                </div>
-
-                <div className="flex justify-between items-center mt-2">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusBadge(
-                      job.status
-                    )}`}
-                  >
+                <div className="text-gray-800 font-medium">{job.title}</div>
+                <div className="text-gray-600">{job.company_name}</div>
+                <div className="text-gray-600">{job.location}</div>
+                <div className="text-gray-600">₹ {job.salary}</div>
+                <div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusBadge(job.status)}`}>
                     {job.status || 'Pending'}
                   </span>
-
-                  <span className="flex items-center gap-1 text-xs text-gray-500">
-                    <CalendarCheck2 size={14} className="text-blue-400" />
-                    {new Date(job.applied_at).toLocaleDateString()}
-                  </span>
+                </div>
+                <div className="text-xs text-gray-500 flex items-center gap-1">
+                  <CalendarCheck2 size={14} className="text-blue-400" />
+                  {new Date(job.applied_at).toLocaleDateString()}
                 </div>
               </div>
             ))}

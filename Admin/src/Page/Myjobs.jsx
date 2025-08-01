@@ -6,9 +6,7 @@ import { Briefcase, MapPin, Building2, IndianRupee, Trash2 } from 'lucide-react'
 const Myjobs = () => {
   const { job, setJob, token } = useContext(AdminContext);
 
-  useEffect(() => {
-    console.log('Job hai ye:', job);
-  }, [job]);
+  
 
   const handleDelete = async (jobId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this job?");

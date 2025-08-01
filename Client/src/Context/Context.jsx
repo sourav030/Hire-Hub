@@ -31,7 +31,7 @@ export const ContextProvider = ({ children }) => {
         },
       });
       setUserApplications(res.data.applications);
-      console.log(res)// ✅ store in context
+      
     } catch (err) {
       console.error("Error fetching user applications:", err.response?.data || err.message);
     }

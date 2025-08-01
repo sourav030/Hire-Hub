@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+body {
+  margin-left: 10px;
+}
