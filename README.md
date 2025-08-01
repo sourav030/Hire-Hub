@@ -1,6 +1,6 @@
-# HireHub - Job Portal Platform
+# 💼 HireHub – Full Stack Job Portal Platform
 
-**HireHub** is a full-stack job portal platform where job seekers can explore and apply for jobs, and recruiters can post and manage job listings. Built with modern technologies like React, Node.js, Express, and MySQL.
+**HireHub** is a full-stack job portal platform where job seekers can explore and apply for jobs, and recruiters can post and manage job listings. It features role-based authentication, resume submission, and email notifications — all built with modern technologies like **React**, **Node.js**, **Express**, and **MySQL**.
 
 ---
 
@@ -8,47 +8,51 @@
 
 ### 👨‍💻 For Job Seekers
 - Browse all available jobs
-- View job details
+- View detailed job descriptions
 - Apply for jobs with resume upload
-- Track applied jobs and their status
+- Track status of applied jobs
+- Receive email updates on application status
 
 ### 🧑‍💼 For Recruiters
 - Post new job listings
-- View, edit, and delete their own job posts
-- Manage applicants
+- View, update, and delete posted jobs
+- View list of applicants for each job
+- Change application status (e.g., Selected, Rejected)
+- Email notifications sent automatically via **NodeMailer**
 
 ### 🔐 Authentication
-- Secure login system for both recruiters and job seekers
-- Session-based or token-based login/logout
+- Secure JWT-based login/logout
+- Separate dashboards for **Recruiter** and **Job Seeker**
+- Protected routes based on user role
 
 ---
 
 ## 🛠 Tech Stack
 
-| Frontend       | Backend            | Database | Styling      |
-|----------------|--------------------|----------|--------------|
-| React.js       | Node.js + Express  | MySQL    | Tailwind CSS |
-| React Router   | JWT/Auth Middleware|          |              |
+| Frontend        | Backend             | Database | Styling        | Others             |
+|------------------|----------------------|----------|----------------|--------------------|
+| React.js         | Node.js + Express.js | MySQL    | Tailwind CSS   | NodeMailer, JWT    |
+| React Router DOM | Axios                |          |                | Multer (File Upload)|
 
 ---
 
-## 📁 Project Structure
+## 🗂 Project Structure
 
+git clone https://github.com/sourav030/Hire-Hub.git
+cd Hire-Hub
 
----
-
-## 🔧 Setup Instructions
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/hirehub-job-portal.git
-cd hirehub-job-portal
 cd server
 npm install
-# Create .env file for DB credentials
+# Create a `.env` file with the following:
+# DB_HOST=
+# DB_USER=
+# DB_PASSWORD=
+# DB_NAME=
+# JWT_SECRET=
+# EMAIL_USER=
+# EMAIL_PASS=
 npm start
+
 cd client
 npm install
 npm start
-S
