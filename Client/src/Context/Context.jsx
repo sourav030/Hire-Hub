@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext();
 
 export const ContextProvider = ({ children }) => {
@@ -68,4 +69,5 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAppContext = () => useContext(AppContext);
